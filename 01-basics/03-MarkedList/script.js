@@ -30,3 +30,16 @@ const emails = [
 ];
 
 // Требуется создать Vue приложение
+
+
+import { createApp } from './vendor/vue.esm-browser.js';
+
+// Создайте Vue приложение
+
+const MarkedList = {
+    name: 'MarkedList',
+}
+
+
+const app = createApp(MarkedList);
+const vm = app.mount('#app')
