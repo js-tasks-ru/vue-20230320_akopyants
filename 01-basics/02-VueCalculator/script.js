@@ -9,27 +9,22 @@ const VueCalculator = {
         return {
             firstNumber: 0,
             secondNumber: 0,
-            operator: '',
-            result: 0
+            operator: ''
         }
     },
 
     computed: {
-        calculate() {
-            const calc = (num1, num2, operator) => {
-                switch (operator) {
-                    case 'sum':
-                        return (num1 + num2);
-                    case 'subtract':
-                        return (num1 - num2);
-                    case 'multiply':
-                        return (num1 * num2);
-                    case 'divide':
-                        return (num1 / num2);
-                }
+        result() {
+            switch (this.operator) {
+                case 'sum':
+                    return this.firstNumber + this.secondNumber;
+                case 'subtract':
+                    return this.firstNumber - this.secondNumber;
+                case 'multiply':
+                    return this.firstNumber * this.secondNumber;
+                case 'divide':
+                    return this.firstNumber / this.secondNumber;
             }
-
-            this.result = calc(this.firstNumber, this.secondNumber, this.operator);
         }
     }
 }
