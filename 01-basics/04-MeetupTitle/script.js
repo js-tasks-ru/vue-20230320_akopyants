@@ -19,14 +19,14 @@ const MeetupTitle = {
   data() {
     return {
       id: null,
-      meetupsTitle: ''
+      meetupTitle: ''
     }
   },
   watch: {
     id: {
       handler(value) {
         fetchMeetupById(value).then((meetups) => {
-          this.meetupsTitle = meetups.title;
+          this.meetupTitle = meetups.title;
         });
       }
     }
