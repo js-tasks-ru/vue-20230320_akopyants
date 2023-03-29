@@ -22,7 +22,11 @@ export default defineComponent({
     },
 
     localDate() {
-      return new Date(this.date).toLocaleDateString(window.navigator.language)
+      return new Date(this.date).toLocaleDateString(window.navigator.language, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
     },
   },
   template: `
@@ -37,9 +41,7 @@ export default defineComponent({
       </li>
       <li>
         <img class="icon meetup-info__icon" alt="icon" src="/assets/icons/icon-cal-lg.svg" />
-        <time :datetime="isoDate">
-          {{ localDate }}
-        </time>
+        <time :datetime="isoDate">{{ localDate }}</time>
       </li>
     </ul>`,
 });
