@@ -179,7 +179,7 @@ export default [
     place: 'USA, AUSTIN CONVENTION CENTER',
     agenda: [
       {
-        id: 35,
+        id: 135,
         startsAt: '07:30',
         endsAt: '09:00',
         type: 'registration',
