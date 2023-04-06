@@ -1,12 +1,11 @@
 <template>
-    <div class="toast" :class="{ toast_success: type === 'success', toast_error: type === 'error' }">
-      <UiIcon v-if="type == 'success'" class="toast__icon" icon="check-circle" />
-      <UiIcon v-if="type == 'error'" class="toast__icon" icon="alert-circle" />
-      <span>
-        <slot />
-      </span>
-      <div class="toast-close" @click="deleteToast">x</div>
-    </div>
+  <div class="toast" :class="{ toast_success: toastType === 'success', toast_error: toastType === 'error' }">
+    <UiIcon class="toast__icon" :icon="iconType"/>
+    <span>
+      <slot />
+    </span>
+    <div class="toast-close" @click="deleteToast">x</div>
+  </div>
 </template>
 
 <script>
@@ -15,18 +14,23 @@ import UiIcon from './UiIcon.vue';
 export default {
   name: 'UiToast',
   props: {
-    type: {
+    toastType: {
       type: String,
     },
-    id: {
+    toastId: {
       type: Number,
+    },
+  },
+  computed: {
+    iconType() {
+      return this.toastType === 'success' ? 'check-circle' : 'alert-circle';
     },
   },
   components: { UiIcon },
   emits: ['deleteToast'],
   methods: {
     deleteToast() {
-      this.$emit('deleteToast', this.id);
+      this.$emit('deleteToast');
     },
   },
 };
