@@ -1,7 +1,7 @@
 <template>
   <nav class="nav">
-    <a href="/login" class="nav__link">Вход</a>
-    <a href="/register" class="nav__link">Регистрация</a>
+    <RouterLink to="/login" class="nav__link">Вход</RouterLink>
+    <RouterLink to="/register" class="nav__link">Регистрация</RouterLink>
   </nav>
 </template>
 
@@ -14,7 +14,7 @@ export default {
 <style scoped>
 .nav {
   display: flex;
-  justify-content: center;
+  justify-content: center; 
   flex-direction: column;
   align-items: flex-start;
   margin-left: 24px;
