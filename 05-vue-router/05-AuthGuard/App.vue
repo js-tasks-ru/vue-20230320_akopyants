@@ -40,11 +40,17 @@ export default {
     login() {
       login();
       this.isAuthenticated = isAuthenticated();
+        console.log(
+    isAuthenticated()
+  )
     },
 
     logout() {
       logout();
       this.isAuthenticated = isAuthenticated();
+        console.log(
+    isAuthenticated()
+  )
     },
   },
 };
