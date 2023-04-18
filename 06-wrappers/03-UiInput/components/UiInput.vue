@@ -43,9 +43,6 @@ export default {
     },
   },
   emits: ['update:modelValue', 'change'],
-  created() {
-    console.log(this.modelModifiers); // { capitalize: true }
-  },
   expose: ['focus'],
 
   computed: {
