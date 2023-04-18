@@ -1,32 +1,35 @@
 <template>
   <fieldset class="agenda-item-form">
-    <button type="button" class="agenda-item-form__remove-button">
+    <button type="button" class="agenda-item-form__remove-button" @click="remove">
       <UiIcon icon="trash" />
     </button>
 
     <UiFormGroup>
-      <UiDropdown title="Тип" :options="$options.agendaItemTypeOptions" name="type" />
+      <UiDropdown title="Тип" :options="$options.agendaItemTypeOptions" v-model="localAgendaItem.type" name="type" />
     </UiFormGroup>
-
     <div class="agenda-item-form__row">
       <div class="agenda-item-form__col">
         <UiFormGroup label="Начало">
-          <UiInput type="time" placeholder="00:00" name="startsAt" />
+          <UiInput type="time" placeholder="00:00" name="startsAt" v-model="localAgendaItem.startsAt" />
         </UiFormGroup>
       </div>
       <div class="agenda-item-form__col">
         <UiFormGroup label="Окончание">
-          <UiInput type="time" placeholder="00:00" name="endsAt" />
+          <UiInput type="time" placeholder="00:00" name="endsAt" v-model="localAgendaItem.endsAt" />
         </UiFormGroup>
       </div>
     </div>
-
-    <UiFormGroup label="Заголовок">
-      <UiInput name="title" />
-    </UiFormGroup>
-    <UiFormGroup label="Описание">
-      <UiInput multiline name="description" />
-    </UiFormGroup>
+    <template v-for="(value, key) in schema" :key="key">
+      <UiFormGroup :label="value.label">
+        <component
+          :is="value.component"
+          :id="key"
+          :name="key"
+          v-bind="value.props"
+          v-model="localAgendaItem[key]"
+        />
+      </UiFormGroup>
+    </template>
   </fieldset>
 </template>
 
@@ -35,6 +38,7 @@ import UiIcon from './UiIcon.vue';
 import UiFormGroup from './UiFormGroup.vue';
 import UiInput from './UiInput.vue';
 import UiDropdown from './UiDropdown.vue';
+import { DateTime } from 'luxon';
 
 const agendaItemTypeIcons = {
   registration: 'key',
@@ -163,6 +167,41 @@ export default {
     agendaItem: {
       type: Object,
       required: true,
+    },
+  },
+
+  data() {
+    return {
+      localAgendaItem: { ...this.agendaItem },
+    };
+  },
+
+  computed: {
+    schema() {
+      return agendaItemFormSchemas[this.localAgendaItem.type];
+    },
+  },
+
+  watch: {
+    localAgendaItem: {
+      deep: true,
+      handler() {
+        this.$emit('update:agendaItem', { ...this.localAgendaItem });
+      },
+    },
+    'localAgendaItem.startsAt'(newVal, oldVal) {
+      const startsAtNewValue = DateTime.fromISO(`2022-01-01T${newVal}`);
+      const startsAtOldValue = DateTime.fromISO(`2022-01-01T${oldVal}`);
+      const endsAt = DateTime.fromISO(`2022-01-01T${this.localAgendaItem.endsAt}`);
+      const diff = endsAt.diff(startsAtOldValue, 'hours').hours;
+
+      this.localAgendaItem.endsAt = startsAtNewValue.plus({ hours: diff }).toFormat('HH:mm');
+    },
+  },
+
+  methods: {
+    remove() {
+      this.$emit('remove');
     },
   },
 };
