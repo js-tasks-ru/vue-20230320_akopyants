@@ -23,8 +23,6 @@
       <UiFormGroup :label="value.label">
         <component
           :is="value.component"
-          :id="key"
-          :name="key"
           v-bind="value.props"
           v-model="localAgendaItem[key]"
         />
