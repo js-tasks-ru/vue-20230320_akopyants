@@ -6,6 +6,7 @@ import { computed } from 'vue';
  * @returns {function(...[*]): ComputedRef<T>} - Функция вычисления от ref-ов, возвращающая вычисляемое значение computed
  */
 export function reactify(func) {
-  // ...
-  // return () => computed(() => {});
+  return (...args) => computed(() => {
+    return func(...args.map(item => item.value ?? item))
+  });
 }
