@@ -1,4 +1,4 @@
-import { computed } from 'vue';
+import { computed, unref, isRef } from 'vue';
 
 /**
  * @template T
@@ -7,6 +7,6 @@ import { computed } from 'vue';
  */
 export function reactify(func) {
   return (...args) => computed(() => {
-    return func(...args.map(item => item.value ?? item))
+    return func(...args.map(item => isRef(item) ? unref(item) : item ))
   });
 }
